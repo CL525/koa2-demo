@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+    </head>
+    <body>
+        <p>模板写法</p>
+        <p>我是：<%=title%></p>
+        <p>我的分数是：<%=score%></p>
+        <% if (score > 60){ %>
+            <p>及格了</p>
+        <% } else { %>
+            <p>不及格</p> 
+        <% } %>
+        我的爱好有：
+        <% for(var i = 0; i < list.length; i++){ %>
+            <p><%=list[i] %></p> 
+            <% } %>   
+            <img src="images/a.png" />
+        <form action="/product/add" method="post">
+            用户名：<input type="text" name="username" /><br/>
+            密码：<input type="text" name="password" /><br/>
+            <input type="submit" value="提交" />
+        </form>
+    </body>
+</html>
