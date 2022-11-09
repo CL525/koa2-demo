@@ -148,5 +148,50 @@ module.exports = {
         code: '10306',
         message: '缺少关键参数',
         results: []
-    }
+    },
+    deleteCartDataError: {
+        code: '10307',
+        message: '删除购物车数据失败',
+        results: []
+    },
+    selectAllCartDataNull: {
+        code: '10308',
+        message: '购物车中没有可以操作的商品',
+        results: []
+    },
+    selectAllCartDataError: {
+        code: '10309',
+        message: '操作失败',
+        results: []
+    },
+    addrParamsFormateError: {
+        code: '10401',
+        message: '操作地址参数格式错误',
+        results: []
+    },
+    upAddrDataError: {
+        code: '10402',
+        message: '更新地址信息失败',
+        results: []
+    },
+    removeAddrDataError: {
+        code: '10403',
+        message: '删除地址信息失败',
+        results: []
+    },
+    setDefaultAddrDataError: {
+        code: '10404',
+        message: '设置默认地址失败',
+        results: []
+    },
+    findAddrDataError: {
+        code: '10405',
+        message: '当前地址不存在',
+        results: []
+    },
+    findAddrListDataError: {
+        code: '10405',
+        message: '获取地址信息失败',
+        results: []
+    },
 }

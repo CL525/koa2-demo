@@ -1,6 +1,6 @@
 const Router = require('@koa/router');
 const router = new Router();
-const { add, getList, upData} = require('../controller/cart.controller');
+const { add, getList, upData, remove, selectAll } = require('../controller/cart.controller');
 const { validator, checkGoodsById } = require('../middleware/cart.middlerware');
 const { auth } = require('../middleware/auth.middlerware');
 //api/user
@@ -21,5 +21,15 @@ router.patch('/', auth, validator({
     quantity: { type: 'number', required: false },
     selected: { type: 'boolean', required: false },
 }), upData)
+
+//删除购物车
+router.delete('/', auth, validator({
+    goods_ids: { type: 'array', required: true },
+}), remove)
+
+//更新购物车
+router.patch('/selectAll', auth, validator({
+    selected: { type: 'boolean', required: true }
+}), selectAll)
 
 module.exports = router;

@@ -1,5 +1,5 @@
-const { createOrUpData, findCarts, upCartData } = require('../service/cart.service');
-const { addCartError, getCartListError, upCartDataError, upCartDataParamsError } = require('../constant/er.type');
+const { createOrUpData, findCarts, upCartData, removeCarts, selectAllCarts } = require('../service/cart.service');
+const { addCartError, getCartListError, upCartDataError, upCartDataParamsError, deleteCartDataError, selectAllCartDataNull, selectAllCartDataError } = require('../constant/er.type');
 class CartController {
   async add(ctx, next) {
     let { goods_id, quantity } = ctx.request.body;
@@ -58,6 +58,48 @@ class CartController {
       }
     } catch (err) {
       ctx.app.emit('error', upCartDataError, ctx);
+    }
+  }
+
+  async remove(ctx, next) {
+    const { goods_ids } = ctx.request.body
+    const user_id = ctx.state.user.id
+    //参数值不能为空数组
+    if (goods_ids.length == 0) {
+      return ctx.app.emit('error', upCartDataParamsError, ctx)
+    }
+    try {
+      const res = await removeCarts({ goods_ids, user_id })
+      if (res) {
+        ctx.body = {
+          code: 1,
+          message: '删除购物车商品成功',
+          results: []
+        }
+      } else {
+        ctx.app.emit('error', deleteCartDataError, ctx)
+      }
+    } catch (e) {
+      ctx.app.emit('error', deleteCartDataError, ctx)
+    }
+  }
+
+  async selectAll(ctx, next) {
+    const { selected } = ctx.request.body
+    const user_id = ctx.state.user.id
+    try {
+      const res = await selectAllCarts({ selected, user_id })
+      if (res > 0) {
+        ctx.body = {
+          code: 1,
+          message: selected ? '全选成功' : '全不选成功',
+          results: []
+        }
+      } else {
+        ctx.app.emit('error', selectAllCartDataNull, ctx)
+      }
+    } catch (e) {
+      ctx.app.emit('error', selectAllCartDataError, ctx)
     }
   }
 }

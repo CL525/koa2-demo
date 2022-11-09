@@ -24,10 +24,13 @@ class CartService {
             }
         });
         if (res) {//购物车中商品已经存在
-            await res.increment('quantity', { by: quantity })
-            return await res.reload();
+            // await res.increment('quantity', { by: quantity })
+            // return await res.reload()
+            res.quantity += quantity
+            res.selected = true
+            return await res.save();
         } else {
-            return await Cart.create({ user_id, goods_id, quantity })
+            return await Cart.create({ user_id, goods_id, quantity, selected: true })
         }
     }
 
@@ -65,6 +68,31 @@ class CartService {
         selected === undefined ? '' : res.selected = selected
         quantity === undefined ? '' : res.quantity = quantity
         return await res.save()
+    }
+    async removeCarts({ goods_ids, user_id }) {
+        return await Cart.destroy({
+            attributes: ['user_id', 'goods_id'],
+            where: {
+                // [Op.and]: {
+                //     user_id,
+                //     goods_id: goods_ids
+                // }
+                user_id,
+                goods_id: goods_ids
+            },
+            force: true
+        })
+    }
+
+    async selectAllCarts({ selected, user_id }) {
+        console.log(selected, user_id)
+        const res = await Cart.update({ selected }, {
+            where: {
+                user_id
+            },
+            force: true
+        })
+        return res && res[0] || 0;
     }
 }
 
