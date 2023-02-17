@@ -7,13 +7,13 @@ const bodyParser = require('koa-bodyparser');
 const session = require('koa-session');
 const parameter =require('koa-parameter');
 
-const errHandler = require('./errHandler');
-const apiRouter = require('./routes/api/index.js');//引入外部路由
+const errHandler = require('../errHandler');
+const apiRouter = require('../routes/api/index.js');//引入外部路由
 const app = new Koa();
 
 //中间件，访问所有路由都会触发
 app.use(async (ctx, next) => {
-    // console.log('执行');
+    console.log('执行');
     await next();
     console.log('接口输出结果', ctx.response)
     // if (ctx.status == 409) {
@@ -23,13 +23,14 @@ app.use(async (ctx, next) => {
     // }
 });
 
-app.use(views(__dirname + '/views', {
+console.log(__dirname)
+app.use(views(__dirname + '../views', {
     map: {
         html: 'ejs'
     }
 }));
 app.keys = ['this is str'];
-app.use(koaStatic(__dirname));
+app.use(koaStatic(__dirname + '../'));
 app.use(bodyParser());
 app.use(parameter(app));
 
@@ -45,4 +46,4 @@ app.use(apiRouter.routes())
 //返回错误监听处理
 app.on('error', errHandler);
 
-app.listen(3000)
+module.exports = app
