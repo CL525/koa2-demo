@@ -23,14 +23,13 @@ app.use(async (ctx, next) => {
     // }
 });
 
-console.log(__dirname)
-app.use(views(__dirname + '../views', {
+app.use(views(__dirname + '/../views', {
     map: {
         html: 'ejs'
     }
 }));
 app.keys = ['this is str'];
-app.use(koaStatic(__dirname + '../'));
+app.use(koaStatic(__dirname + '/../routes/api/static/upload'));
 app.use(bodyParser());
 app.use(parameter(app));
 
