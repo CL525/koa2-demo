@@ -6,7 +6,6 @@ module.exports = (err, ctx) => {
             break;
         case '10002':
             status = 409;
-
             break;
     }
     console.error(err.message, ctx.request);

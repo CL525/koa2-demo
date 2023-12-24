@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { getUserInfo } = require('../service/user.service');
+const { JWT_SECRET } = require('../../../config/config.default');
 const {
     tokenExpiredError,
     jsonWebTokenError,
@@ -11,7 +12,7 @@ const auth = async (ctx, next) => {
     // const token = authorization.replace('Bearea ', '');
     try {
         //user中包含了payload的信息(id, user_name_ is_admin等)
-        const user = jwt.verify(token, 'jdsc');
+        const user = jwt.verify(token, JWT_SECRET);
         ctx.state.user = user;
     } catch (err) {
         switch (err.name) {

@@ -2,6 +2,7 @@ const { createUser, getUserInfo, updateById } = require('../service/user.service
 const jwt = require('jsonwebtoken');
 
 const { userRegisterError, userLoginError, changePasswordError } = require('../constant/er.type');
+const { JWT_SECRET } = require('../../../config/config.default');
 class UserController {
   async register(ctx, next) {
     let { user_name, password } = ctx.request.body;
@@ -32,7 +33,7 @@ class UserController {
         code: 1,
         message: '登陆成功',
         results: [{
-          token: jwt.sign(res, 'jdsc', { expiresIn: '1d' })
+          token: jwt.sign(res, JWT_SECRET, { expiresIn: '1d' })
         }]
       }
     } catch (err) {
