@@ -31,6 +31,8 @@
     "sequelize": "^6.25.3"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^18.4.4",
+    "husky": "^8.0.3",
     "nodemon": "^3.0.2"
   }
 }
